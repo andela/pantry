@@ -2,6 +2,7 @@ import React, {useRef, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import NfcManager, {NfcEvents} from 'react-native-nfc-manager';
 import axios from 'axios';
+import Modal from 'react-native-modal';
 
 import MonoText from '../components/StyledText';
 import Layout from '../components/Layout';
@@ -9,13 +10,15 @@ import ScreenLayout from '../components/ScreenLayout';
 import Animation from '../components/Animation';
 import {NFC_ANIMATION_NAME} from '../constants';
 import showError from '../utils/error';
-import showResponse from '../utils/response';
 import {PANTRY_TAP_URL} from '../constants/Url';
 import decodeNdefRecord from '../utils/decodeNdefRecord';
+import ViewResponse from '../components/Response';
 
 export default function HomeScreen() {
   const ref = useRef(null);
   const [isLoading, setLoading] = useState(false);
+  const [showModal, setModalVisibility] = useState(false);
+  const [tapResponse, setResponse] = useState({});
 
   const startReadingNFC = async () => {
     try {
@@ -39,10 +42,9 @@ export default function HomeScreen() {
 
       const opts = {headers: {'Content-Type': 'multipart/form-data'}};
       const {data} = await axios.post(PANTRY_TAP_URL, payload, opts);
-      console.log(data, 'API rsponse-----');
 
       response.message = data.message;
-      response.status = 'success';
+      response.status = true;
       return response;
     } catch (error) {
       /**
@@ -57,7 +59,7 @@ export default function HomeScreen() {
         : error.message;
 
       response.message = errorMessage;
-      response.status = 'error';
+      response.status = false;
       return response;
     } finally {
       setLoading(false);
@@ -77,7 +79,8 @@ export default function HomeScreen() {
       const [_, slackId] = parsedArray;
       const response = await tap(slackId);
 
-      showResponse(response);
+      setResponse(response);
+      setModalVisibility(true);
     } catch (error) {
       const errorMessage = error.message || error;
       showError(`An error occured: ${errorMessage}`);
@@ -95,11 +98,25 @@ export default function HomeScreen() {
     };
   });
 
+  const hideModal = () => {
+    setModalVisibility(false);
+    setResponse({});
+  };
+
+  const modalProps = {
+    backdropOpacity: 0.5,
+    isVisible: showModal,
+    onBackdropPress: hideModal,
+  };
+
   return (
     <ScreenLayout>
       <Layout>
         <Animation ref={ref} file={NFC_ANIMATION_NAME} />
         <MonoText style={styles.text}>Listening to NFC</MonoText>
+        <Modal {...modalProps}>
+          <ViewResponse toggleModal={hideModal} response={tapResponse} />
+        </Modal>
       </Layout>
     </ScreenLayout>
   );
