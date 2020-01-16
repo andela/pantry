@@ -3,7 +3,7 @@ import React from 'react';
 import Svg, {Circle, Rect, Path, Ellipse, Polygon} from 'react-native-svg';
 
 export default () => (
-  <Svg id="eae92b3c-f2dd-4107-b6f3-1e0441e28c2a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="500" height="400" viewBox="0 0 886.29501 670.66766" style={{ marginTop: 50 }}>
+  <Svg id="eae92b3c-f2dd-4107-b6f3-1e0441e28c2a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 886.29501 670.66766" style={{ marginTop: 50 }}>
     <Path d="M832.0229,761.21947c-.12009-.19624-2.95175-4.92435-3.93345-14.74237-.90044-9.00753-.32144-24.19041,7.55261-45.36929,14.91714-40.122-3.43774-72.49457-3.62529-72.817l.90555-.52534a80.35978,80.35978,0,0,1,7.58174,21.47834,93.703,93.703,0,0,1-3.88081,52.22892c-14.8916,40.05349-3.82051,59.01446-3.70706,59.2015Z" transform="translate(-156.8525 -114.66617)" fill="#e6e6e6" />
     <Circle cx="669.33744" cy="504.46581" r="6.80291" fill="#3f3d56" />
     <Circle cx="690.79278" cy="529.58426" r="6.80291" fill="#3f3d56" />

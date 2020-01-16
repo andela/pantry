@@ -85,17 +85,12 @@ const ReportScreen = () => {
   };
 
   const onScreenFocus = () => {
-    if (ref.current) {
-      ref.current.play();
-    }
     setData({});
   };
 
   return (
     <ScreenLayout isBlue={false}>
-      {/* <NavigationEvents
-        onDidFocus={onScreenFocus}
-      /> */}
+      <NavigationEvents onDidFocus={onScreenFocus} />
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>
           Displaying report for {''}
@@ -178,7 +173,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   directionText: {
-    fontSize: 25,
+    fontSize: 20,
     alignSelf: 'center',
     marginTop: 50,
   },
